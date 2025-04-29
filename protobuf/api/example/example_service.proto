@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package github.com.mdubakin.balun.grpc.course.api.example;
+
+import "api/example/example_messages.proto";
+
+// можно указывать алиас для пакета, например example_v1
+// option go_package = "pkg/api/example;example_v1";
+option go_package = "pkg/api/example";
+
+// Example - сервис пример
+service Example {
+  // CreatePost - метод создания постов
+  rpc CreatePost(CreatePostRequest) returns (CreatePostResponse);
+  // ListPosts - метод получения постов
+  rpc ListPosts(ListPostsRequest) returns (ListPostsResponse);
+  // Best practice: если метод ничего не возвращает, то лучше все равно
+  // возвращать Response структуру, но пустую. Это позволит безболезненно
+  // расширять API, добавив поле.
+}

@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package github.com.mdubakin.balun.grpc.course.api.example;
+
+import "buf/validate/validate.proto";
+
+// можно указывать алиас для пакета, например example_v1
+// option go_package = "pkg/api/example;example_v1";
+option go_package = "pkg/api/example";
+
+// CreatePostRequest - запрос метода CreatePost
+message CreatePostRequest {
+  // формат
+  // [тип, имя, порядковый номер]
+  // title - название поста
+  string title = 1 [
+    json_name                   = "title",
+    (buf.validate.field).string = { min_len: 3, max_len: 256 }
+  ];
+  // author_id - id автора поста
+  string author_id = 2
+      [json_name = "author_id", (buf.validate.field).string.min_len = 1];
+  // content - содержание поста
+  string content = 3 [
+    json_name                   = "content",
+    (buf.validate.field).string = { min_len: 3, max_len: 2048 }
+  ];
+}
+
+// CreatePostResponse - ответ метода CreatePost
+message CreatePostResponse {
+  // post_id - id созданного поста
+  uint64 post_id = 1 [json_name = "post_id"];
+}
+
+message ListPostsRequest {}
+
+message ListPostsResponse {}
